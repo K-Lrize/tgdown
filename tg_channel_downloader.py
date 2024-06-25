@@ -16,7 +16,7 @@ bot_token = '1234567890:ABCDEFGHIJKLMNOPQRST'  # your bot_token
 admin_id = 1234567890  # your chat id
 save_path = '/usr/downloads'  # file save path
 upload_file_set = True  # set upload file to google drive
-drive_id = '5FyJClXmsqNw0-Rz19'  # google teamdrive id
+drive_id = '5FyJClXmsqNw0-Rz19'  # google teamdrive id 如果使用OD，删除''内的内容即可。
 drive_name = 'gc'  # rclone drive name
 max_num = 5  # 同时下载数量
 # filter file name/文件名过滤
@@ -24,7 +24,7 @@ filter_list = ['你好，欢迎加入 Quantumu', '\n']
 # filter chat id /过滤某些频道不下载
 blacklist = [1388464914,]
 donwload_all_chat = False # 监控所有你加入的频道，收到的新消息如果包含媒体都会下载，默认关闭
-filter_file_name = ['jpg', ]
+filter_file_name = [] # 过滤文件后缀，可以填jpg、avi、mkv、rar等。
 #***********************************************************************************#
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -178,6 +178,8 @@ async def handler(update):
                 file_name = ''
                 # 如果是文件
                 if message.document:
+                    if type(message.media) == MessageMediaWebPage:
+                        continue
                     if message.media.document.mime_type == "image/webp":
                         continue
                     if message.media.document.mime_type == "application/x-tgsticker":
